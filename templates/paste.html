@@ -23,10 +23,36 @@
         color: #888;
         -webkit-user-select: none;
     }
+
+    .copy-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+
+        height: 3rem;
+        width: 3rem;
+        border: none;
+        border-radius: 50%;
+        /* blue color  */
+        background: #2196F3;
+
+        color: white;
+        font-size: 2rem;
+        cursor: pointer; 
+    }
 {% endblock styles %}
 
 {% block head %}
     <link rel="stylesheet" type="text/css" href="highlight.css" />
 {% endblock head %}
 
-{% block content %}<pre>{{ content|safe }}</pre>{% endblock content %}
+{% block content %}
+<pre>{{ content|safe }}</pre>
+<button class="copy-btn">&#x1F4CB;</button>
+<script>
+    const copyBtn = document.querySelector('.copy-btn')
+    copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(document.querySelector('pre').innerText)
+    })
+</script>
+{% endblock content %}

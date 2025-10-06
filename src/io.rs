@@ -27,13 +27,17 @@ fn purge_old(entries: &mut LinkedHashMap<String, Bytes>) {
 pub fn generate_id() -> String {
     thread_local!(static KEYGEN: RefCell<gpw::PasswordGenerator> = RefCell::new(gpw::PasswordGenerator::default()));
 
-    KEYGEN.with(|k| k.borrow_mut().next()).unwrap_or_else(|| {
+    let ret = KEYGEN.with(|k| k.borrow_mut().next()).unwrap_or_else(|| {
         rng()
             .sample_iter(&Alphanumeric)
             .take(6)
             .map(char::from)
             .collect()
-    })
+    });
+
+    // create a string
+    // get substring of 3 chars of ret
+    ret.chars().take(3).collect()
 }
 
 /// Stores a paste under the given id
